@@ -6,7 +6,7 @@
         {
             "label": "gen",
             "type": "shell",
-            "command": "protoc -I=. service.proto --js_out=import_style=commonjs,binary:frontend-gen --grpc-web_out=import_style=typescript,mode=grpcweb:frontend-gen && protoc -I=. service.proto --js_out=import_style=commonjs,binary:backend-gen --ts_out=import_style=commonjs,binary:backend-gen"
+            "command": "protoc -I=. service.proto --js_out=import_style=commonjs,binary:frontend-gen/grpc-gen --grpc-web_out=import_style=typescript,mode=grpcweb:frontend-gen/grpc-gen && protoc -I=. service.proto --js_out=import_style=commonjs,binary:backend-gen/grpc-gen --ts_out=import_style=commonjs,binary:backend-gen/grpc-gen"
         }
     ]
 }
