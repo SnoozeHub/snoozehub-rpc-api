@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+service AuthService {
+  rpc GetNonce (Empty) returns (GetNonceResponse) {}
+  rpc Auth (AuthRequest) returns (AuthResponse) {}
+}
+
+message Empty { }
+
+message GetNonceResponse {
+  string nonce = 1;
+}
+message AuthRequest {
+  string address = 1;
+  string nonceSigned = 2;
+}
+
+message AuthResponse {
+  string authToken = 1;
+}
