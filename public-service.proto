@@ -43,6 +43,7 @@ message GetBedsResponse {
 			string surname = 2; // Not empty
 			string telegramUsername = 3; // Not empty
 			optional bytes profilePic = 4; // Valid AVIF image, max length = 512kb
+			uint32 accountCreationDate = 5; // 8 digit (base 10) number, for example 30012000 -> 30-01-2000. It's valid
 		}
 		HostPublicInfo hostInfo = 2;
 	
@@ -51,7 +52,7 @@ message GetBedsResponse {
 	
 		Features features = 5;
 	
-		repeated uint32 dateAvailables = 6; //1-90 Refers to the night between the date and the next day, 8 digit (base 10) number, for example 30012000 -> 30-01-2000. It's valid
+		repeated uint32 dateAvailables = 6; //1-90 .  Refers to the night between the date and the next day, 8 digit (base 10) number, for example 30012000 -> 30-01-2000. It's valid
 		
 		uint32 reviewCount = 8;
 		optional uint32 averageEvaluation = 7; // min = 0, max = 50. For example 42 is evaluated as 4.2. Not set if and only if reviewCount is 0

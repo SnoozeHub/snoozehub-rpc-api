@@ -14,6 +14,10 @@ service AuthOnlyService {
     rpc UpdateAccountInfo(AccountInfo) returns (Empty) {}
 
     // FOR EVERY FOLLOWING RPC IS ASSUMED THAT THE CALLER HAS A VERIFIED ACCOUNT
+    rpc Book(BookRequest) returns (BookResponse);
+    rpc GetBookings(Empty) returns (GetBookingsResponse);
+
+    //#TODO AddBed, ModifyBed, RemoveBed, GetMyBeds, Review, AddBookAvaiability, RemoveBookAvaiability
 }
 
 
@@ -24,10 +28,18 @@ message VerifyMailResponse {
     bool ok = 1;
 }
 
+message BookRequest {
+    Book book = 1; // It's available
+}
 
+message BookResponse {
+    // If true: client can pay, else the booking is locked
+    bool isBookingUnlocked = 1;
+}
 
-
-
+message GetBookingsResponse {
+    repeated Book book = 1;
+}
 
 
 

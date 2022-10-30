@@ -23,3 +23,7 @@ message Features {
     bool pillows = 8;
 }
 
+message Book {
+    string bedId = 1; // Is valid (exist)
+    uint32 date = 2; // Refers to the night between the date and the next day, 8 digit (base 10) number, for example 30012000 -> 30-01-2000. It's valid
+}
