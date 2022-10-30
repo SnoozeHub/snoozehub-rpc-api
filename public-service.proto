@@ -1,5 +1,4 @@
 syntax = "proto3";
-
 service PublicService {
 	// Authentication
 	rpc GetNonce (Empty) returns (GetNonceResponse) {}
@@ -59,9 +58,5 @@ message Bed {
 	}
 	Features features = 4;
 
-
-}
-message Availability {
-	uint32 date = 1; // Refers to the night between this date and the next day, 8 digit (base 10) number, for example 30012000 -> 30-01-2000
-	#TODO
+	repeated uint32 dateAvailables = 5; //1-90 Refers to the night between the date and the next day, 8 digit (base 10) number, for example 30012000 -> 30-01-2000. It's valid
 }
