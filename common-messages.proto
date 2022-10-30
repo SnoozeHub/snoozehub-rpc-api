@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+message Empty { }
+
+message AccountInfo {
+    string name = 1; // length=1-40
+    string surname = 2; // length=1-40
+    string mail = 3; // Is a valid mail format, max length=60
+    string telegramUsername = 4; // Valid
+}
+message ProfilePic {
+    optional bytes image = 1; // Valid AVIF image, max length = 512kb
+}
+
+message Features {
+    bool internetConnection = 1;
+    bool bathroom = 2;
+    bool heating = 3;
+    bool airConditioner = 4;
+    bool electricalOutlet = 5;
+    bool tap = 6;
+    bool bedLinens = 7;
+    bool pillows = 8;
+}
+

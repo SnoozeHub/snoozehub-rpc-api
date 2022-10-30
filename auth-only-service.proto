@@ -1,5 +1,6 @@
 syntax = "proto3";
-import "public-service.proto";
+import "common-messages.proto";
+
 service AuthOnlyService {
     rpc SignUp(AccountInfo) returns (Empty) {} // Called only if the account does not exist
     rpc VerifyMail(VerifyMailRequest) returns (VerifyMailResponse) {}
@@ -17,18 +18,20 @@ service AuthOnlyService {
 
 
 message VerifyMailRequest {
-    string verificationCode = 1; // Not empty
+    string verificationCode = 1; // 6 digit numbers
 }
 message VerifyMailResponse {
     bool ok = 1;
 }
 
-message AccountInfo {
-    string name = 1; // Not empty
-    string surname = 2; // Not empty
-    string mail = 3; // Is a valid mail format
-    string telegramUsername = 4; // Valid
-}
-message ProfilePic {
-    optional bytes image = 1; // Valid AVIF image, max lenght = 512kb
+
+
+
+
+
+
+
+message Review {
+    uint32 evaluation = 1; // min = 0, max = 50. For example 42 is evaluated as 4.2
+    optional string comment = 2; // length=1-200
 }

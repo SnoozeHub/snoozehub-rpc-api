@@ -1,17 +1,19 @@
 syntax = "proto3";
+import "common-messages.proto";
+
 service PublicService {
 	// Authentication
 	rpc GetNonce (Empty) returns (GetNonceResponse) {}
 	rpc Auth (AuthRequest) returns (AuthResponse) {}
 
 	rpc GetBeds (GetBedsRequest) returns (GetBedsResponse) {}
+	rpc GetReview(GetReviewsRequest) returns (GetReviewsResponse) {}
 }
-
-message Empty { }
 
 message GetNonceResponse {
 	string nonce = 1; // Not empty
 }
+
 message AuthRequest {
 	string address = 1; // Valid format
 	string nonceSigned = 2; // Valid format
@@ -24,39 +26,49 @@ message AuthResponse {
 
 message GetBedsRequest {
 	uint32 date = 1; // 8 digit (base 10) number, for example 30012000 -> 30-01-2000
-	string place = 2; // Not empty
+	string place = 2; // length=1-100
+
+	Features featuresMondadory = 3;
 
 	// Get first N results in order by proximity from fromIndex to fromIndex+N where N=15.
-	uint32 fromIndex = 3;
+	uint32 fromIndex = 4;
 }
 
 message GetBedsResponse {
+	message Bed {
+		string id = 1; // Not empty
+
+		message HostPublicInfo {
+			string name = 1; // Not empty
+			string surname = 2; // Not empty
+			string telegramUsername = 3; // Not empty
+			optional bytes profilePic = 4; // Valid AVIF image, max length = 512kb
+		}
+		HostPublicInfo hostInfo = 2;
+	
+		string place = 3; // length=1-100
+		repeated bytes images = 4; // Valid 1-5 AVIF images, max length = 512kb
+	
+		Features features = 5;
+	
+		repeated uint32 dateAvailables = 6; //1-90 Refers to the night between the date and the next day, 8 digit (base 10) number, for example 30012000 -> 30-01-2000. It's valid
+		
+		uint32 reviewCount = 8;
+		optional uint32 averageEvaluation = 7; // min = 0, max = 50. For example 42 is evaluated as 4.2. Not set if and only if reviewCount is 0
+	}
 	repeated Bed beds = 1; // 0-N beds
 }
 
-message Bed {
-	message HostPublicInfo {
-		string name = 1; // Not empty
-		string surname = 2; // Not empty
-		string telegramUsername = 3; // Not empty
-		optional bytes profilePic = 4; // Valid AVIF image, max lenght = 512kb
+message GetReviewsRequest {
+	string bedId = 1; // Is valid (exist)
+	// Get first N results in order by proximity from fromIndex to fromIndex+N where N=4.
+	uint32 fromIndex = 2;
+}
+
+message GetReviewsResponse {
+	message ReviewWithComment {
+		uint32 evaluation = 1; // min = 0, max = 50. For example 42 is evaluated as 4.2
+		string comment = 2; // length=1-200
 	}
-	HostPublicInfo hostInfo = 1;
-
-	string place = 2; // Not empty
-	repeated bytes images = 3; // Valid 1-5 AVIF images, max lenght = 512kb
-
-	message Features {
-		bool internetConnection = 1;
-		bool bathroom = 2;
-		bool heating = 3;
-		bool airConditioner = 4;
-		bool electricalOutlet = 5;
-		bool tap = 6;
-		bool bedLinens = 7;
-		bool pillows = 8;
-	}
-	Features features = 4;
-
-	repeated uint32 dateAvailables = 5; //1-90 Refers to the night between the date and the next day, 8 digit (base 10) number, for example 30012000 -> 30-01-2000. It's valid
+	repeated ReviewWithComment reviewsWithComment = 1; // 0-4 reviewsWithComment
 }
