@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+service PublicService {
+	// Authentication
+	rpc GetNonce (Empty) returns (GetNonceResponse) {}
+	rpc Auth (AuthRequest) returns (AuthResponse) {}
+
+	rpc GetBeds (GetBedsRequest) returns (GetBedsResponse) {}
+}
+
+message Empty { }
+
+message GetNonceResponse {
+	string nonce = 1; // Not empty
+}
+message AuthRequest {
+	string address = 1; // Valid format
+	string nonceSigned = 2; // Valid format
+}
+
+message AuthResponse {
+	string authToken = 1; // Not empty
+	bool accountDoesNotExist = 2;
+}
+
+message GetBedsRequest {
+	uint32 date = 1; // 8 digit (base 10) number, for example 30012000 -> 30-01-2000
+	string place = 2; // Not empty
+
+	// Get first N results in order by proximity from fromIndex to fromIndex+N where N=15.
+	uint32 fromIndex = 3;
+}
+
+message GetBedsResponse {
+	repeated Bed beds = 1; // 0-N beds
+}
+
+message Bed {
+	message HostPublicInfo {
+		string name = 1; // Not empty
+		string surname = 2; // Not empty
+		string telegramUsername = 3; // Not empty
+		optional bytes profilePic = 4; // Valid AVIF image, max lenght = 512kb
+	}
+	HostPublicInfo hostInfo = 1;
+
+	string place = 2; // Not empty
+	repeated bytes images = 3; // Valid 1-5 AVIF images, max lenght = 512kb
+
+	message Features {
+		bool internetConnection = 1;
+		bool bathroom = 2;
+		bool heating = 3;
+		bool airConditioner = 4;
+		bool electricalOutlet = 5;
+		bool tap = 6;
+		bool bedLinens = 7;
+		bool pillows = 8;
+	}
+	Features features = 4;
+
+
+}
+message Availability {
+	uint32 date = 1; // Refers to the night between this date and the next day, 8 digit (base 10) number, for example 30012000 -> 30-01-2000
+	#TODO
+}

@@ -6,3 +6,7 @@ The image used for generation is [namely/protoc-all](https://github.com/namely/d
 3. Develop
 4. Run "gen" task
 5. Manually manually replace the gen files of snoozehub-frontend and snoozehub-backend with the newest version
+
+# Notes for who has to implement them
+- The comments aside some fields are assumptions, if a field doesn't follow its assumption, the rpc isn't valid.
+- In proto3 is not assumed that "normal" field are mondadory, so you have to check if the field exist beffore use it, If a field actually is optional, it's explicit "optional".

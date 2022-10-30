@@ -1,0 +1,22 @@
+syntax = "proto3";
+import "public-service.proto";
+service AuthOnlyService {
+    // SignUp
+    rpc SignUp(SignUpRequest) returns (Empty) {} // Called only if the account does not exist
+    rpc VerifyMail(VerifyMailRequest) returns (VerifyMailResponse) {}
+}
+
+
+message SignUpRequest {
+    string name = 1; // Not empty
+    string surname = 2; // Not empty
+    string mail = 3; // Is a valid mail format
+    string telegramUsername = 4; // Not empty
+}
+
+message VerifyMailRequest {
+    string verificationCode = 1; // Not empty
+}
+message VerifyMailResponse {
+    bool ok = 1;
+}
