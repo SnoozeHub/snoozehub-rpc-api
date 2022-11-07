@@ -14,16 +14,19 @@ service AuthOnlyService {
     rpc UpdateAccountInfo(AccountInfo) returns (Empty);
 
     // FOR EVERY FOLLOWING RPC IS ASSUMED THAT THE CALLER HAS A VERIFIED ACCOUNT
+    // GUEST RPCs
     rpc Book(Booking) returns (BookResponse); // The book is available
     rpc GetMyBookings(Empty) returns (GetBookingsResponse);
+    rpc Review(ReviewRequest) returns(Empty); // Is assumed that A user can review only a past booking that has no review from the user
+    rpc RemoveReview(BedId) returns(Empty); // Is assumed that A user can review only a past booking that has no review from the user
 
+    // HOST RPCs
     rpc AddBed(BedMutableInfo) returns (Empty);
     rpc ModifyMyBed(ModifyBedRequest) returns (Empty);
     rpc RemoveMyBed(BedId) returns (Empty);
-    rpc GetMyBeds(Empty) returns (BedList); // Every bed returned doesn't have the field hostInfo
-    rpc Review(ReviewRequest) returns(Empty); // Is assumed that A user can review only a past booking that has no review from the user
-    rpc RemoveReview(BedId) returns(Empty); // Is assumed that A user can review only a past booking that has no review from the user
-    //#TODO AddBookAvaiability, RemoveBookAvaiability
+    rpc GetMyBeds(Empty) returns (BedList); // Every bed returned doesn't have the field bedMutableInfo
+    rpc AddBookingAvaiability(Booking) returns (Empty);
+    rpc RemoveBookAvaiability(Booking) returns (Empty);
 }
 
 

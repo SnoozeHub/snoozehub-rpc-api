@@ -7,7 +7,7 @@ service PublicService {
 	rpc Auth (AuthRequest) returns (AuthResponse);
 
 
-	rpc GetBeds(GetBedsRequest) returns (BedList); // Every bed returned has the field hostInfo mondadory
+	rpc GetBeds(GetBedsRequest) returns (BedList); // Every bed returned has the field bedMutableInfo mondadory
 	rpc GetReview(GetReviewsRequest) returns (GetReviewsResponse);
 }
 
