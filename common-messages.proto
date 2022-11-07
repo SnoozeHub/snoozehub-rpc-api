@@ -6,10 +6,10 @@ message AccountInfo {
     string name = 1; // length=1-40
     string surname = 2; // length=1-40
     string mail = 3; // Is a valid mail format, max length=60
-    string telegramUsername = 4; // Valid
+    string telegramUsername = 4; // Valid format, without '@'
 }
 message ProfilePic {
-    optional bytes image = 1; // Valid AVIF image, max length = 512kb
+    optional bytes image = 1; // Valid AVIF image, max size = 512kb
 }
 
 message Features {
@@ -23,7 +23,47 @@ message Features {
     bool pillows = 8;
 }
 
-message Book {
-    string bedId = 1; // Is valid (exist)
-    uint32 date = 2; // Refers to the night between the date and the next day, 8 digit (base 10) number, for example 30012000 -> 30-01-2000. It's valid
+message Booking {
+    BedId bedId = 1;
+    uint32 date = 2; // Refers to the night between the date and the next day, 8 digit (base 10) number, for example 30012000 -> 30-01-2000. It's available
+}
+
+message BedMutableInfo {
+    string place = 1; // length=1-100
+    repeated bytes images = 2; // Valid 1-5 AVIF images, max size = 512kb
+    optional string description = 5; // Not empty (trimmed)
+    Features features = 3;
+    uint32 minimumDaysNotice = 4; //  min = 1, max = 30
+}
+
+message BedList {
+	message Bed {
+		BedId id = 1;
+
+		message HostPublicInfo {
+			string name = 1; // Not empty
+			string surname = 2; // Not empty
+			string telegramUsername = 3; // Not empty
+			optional bytes profilePic = 4; // Valid AVIF image, max size = 512kb
+			uint32 accountCreationDate = 5; // 8 digit (base 10) number, for example 30012000 -> 30-01-2000. It's valid
+		}
+		optional HostPublicInfo hostInfo = 2;
+	
+		BedMutableInfo bedMutableInfo = 3;
+
+		repeated uint32 dateAvailables = 4; //1-90 .  Refers to the night between the date and the next day, 8 digit (base 10) number, for example 30012000 -> 30-01-2000. It's valid
+		
+		uint32 reviewCount = 5;
+		optional uint32 averageEvaluation = 6; // min = 0, max = 50. For example 42 is evaluated as 4.2. Not set if and only if reviewCount is 0
+	}
+	repeated Bed beds = 1;
+}
+
+message BedId {
+    string bedId = 1; // Not empty. Is valid (exist)
+}
+
+message Review {
+    uint32 evaluation = 1; // min = 0, max = 50. For example 42 is evaluated as 4.2
+    optional string comment = 2; // length=1-200
 }

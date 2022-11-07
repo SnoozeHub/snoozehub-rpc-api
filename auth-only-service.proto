@@ -2,22 +2,28 @@ syntax = "proto3";
 import "common-messages.proto";
 
 service AuthOnlyService {
-    rpc SignUp(AccountInfo) returns (Empty) {} // Called only if the account does not exist
-    rpc VerifyMail(VerifyMailRequest) returns (VerifyMailResponse) {}
+    rpc SignUp(AccountInfo) returns (Empty); // Called only if the account does not exist
+    rpc VerifyMail(VerifyMailRequest) returns (VerifyMailResponse);
 
-    rpc GetAccountInfo(Empty) returns (AccountInfo) {}
-    rpc GetProfilePic(Empty) returns (ProfilePic) {}
-    rpc DeleteAccount(Empty) returns (Empty) {}
-    rpc SetProfilePic(ProfilePic) returns (Empty) {}
+    rpc GetAccountInfo(Empty) returns (AccountInfo);
+    rpc GetProfilePic(Empty) returns (ProfilePic);
+    rpc DeleteAccount(Empty) returns (Empty);
+    rpc SetProfilePic(ProfilePic) returns (Empty);
     // If the mail is changed, is needed to verify the account (and the eventual old verification code becomed invalid), you can call this function even if
     // the account is not verified, because for example the mail was wrong.
-    rpc UpdateAccountInfo(AccountInfo) returns (Empty) {}
+    rpc UpdateAccountInfo(AccountInfo) returns (Empty);
 
     // FOR EVERY FOLLOWING RPC IS ASSUMED THAT THE CALLER HAS A VERIFIED ACCOUNT
-    rpc Book(BookRequest) returns (BookResponse);
-    rpc GetBookings(Empty) returns (GetBookingsResponse);
+    rpc Book(Booking) returns (BookResponse); // The book is available
+    rpc GetMyBookings(Empty) returns (GetBookingsResponse);
 
-    //#TODO AddBed, ModifyBed, RemoveBed, GetMyBeds, Review, AddBookAvaiability, RemoveBookAvaiability
+    rpc AddBed(BedMutableInfo) returns (Empty);
+    rpc ModifyMyBed(ModifyBedRequest) returns (Empty);
+    rpc RemoveMyBed(BedId) returns (Empty);
+    rpc GetMyBeds(Empty) returns (BedList); // Every bed returned doesn't have the field hostInfo
+    rpc Review(ReviewRequest) returns(Empty); // Is assumed that A user can review only a past booking that has no review from the user
+    rpc RemoveReview(BedId) returns(Empty); // Is assumed that A user can review only a past booking that has no review from the user
+    //#TODO AddBookAvaiability, RemoveBookAvaiability
 }
 
 
@@ -28,22 +34,21 @@ message VerifyMailResponse {
     bool ok = 1;
 }
 
-message BookRequest {
-    Book book = 1; // It's available
-}
-
 message BookResponse {
     // If true: client can pay, else the booking is locked
     bool isBookingUnlocked = 1;
 }
 
 message GetBookingsResponse {
-    repeated Book book = 1;
+    repeated Booking book = 1;
 }
 
+message ModifyBedRequest {
+    BedId bedId = 1;
+    BedMutableInfo bedMutableInfo = 2;
+}
 
-
-message Review {
-    uint32 evaluation = 1; // min = 0, max = 50. For example 42 is evaluated as 4.2
-    optional string comment = 2; // length=1-200
+message ReviewRequest {
+    BedId bedId = 1;
+    Review review = 2;
 }
