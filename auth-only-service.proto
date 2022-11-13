@@ -7,8 +7,8 @@ service AuthOnlyService {
 
     rpc GetAccountInfo(Empty) returns (AccountInfo);
     rpc GetProfilePic(Empty) returns (ProfilePic);
-    rpc DeleteAccount(Empty) returns (Empty);
     rpc SetProfilePic(ProfilePic) returns (Empty);
+    rpc DeleteAccount(Empty) returns (Empty);
     // If the mail is changed, is needed to verify the account (and the eventual old verification code becomed invalid), you can call this function even if
     // the account is not verified, because for example the mail was wrong.
     rpc UpdateAccountInfo(AccountInfo) returns (Empty);
