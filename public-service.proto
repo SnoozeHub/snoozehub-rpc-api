@@ -25,14 +25,16 @@ message AuthResponse {
 	bool accountDoesNotExist = 2;
 }
 
+// BedList returned will include only beds which has at least 1 date available in the range [dateRangeLow, dateRangeHigh]
 message GetBedsRequest {
-	uint32 date = 1; // 8 digit (base 10) number, for example 30012000 -> 30-01-2000
-	string place = 2; // length=1-100
+	uint32 dateRangeLow = 1; // 8 digit (base 10) number, for example 30012000 -> 30-01-2000. It's valid
+	uint32 dateRangeHigh = 2; // 8 digit (base 10) number, for example 30012000 -> 30-01-2000. It's valid
+	string place = 3; // length=1-100
 
-	Features featuresMondadory = 3;
+	Features featuresMondadory = 4;
 
 	// Get first N results in order by proximity from fromIndex to fromIndex+N where N=15.
-	uint32 fromIndex = 4;
+	uint32 fromIndex = 5;
 }
 
 message GetReviewsRequest {
