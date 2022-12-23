@@ -1,4 +1,7 @@
 syntax = "proto3";
+
+option go_package = "./grpc-gen";
+
 import "common-messages.proto";
 
 service AuthOnlyService {
