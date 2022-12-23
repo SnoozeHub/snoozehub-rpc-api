@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "./grpc-gen";
+option go_package = "./grpc_gen";
 
 message Empty { }
 
