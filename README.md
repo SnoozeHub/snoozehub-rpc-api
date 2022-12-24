@@ -1,4 +1,4 @@
-The image used for generation is [namely/protoc-all](https://github.com/namely/docker-protoc/), but is called directly "protoc" command.
+The image used for generation is [namely/protoc-all](https://github.com/namely/docker-protoc/), but is called directly "protoc" command or using https://github.com/timostamm/protobuf-ts for the grpc-web.
 
 # How to use for dev
 1. Open The folder in vscode
