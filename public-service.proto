@@ -21,7 +21,8 @@ message GetNonceResponse {
 message AuthRequest {
 	string nonce = 1; // Valid format
 	string signedNonce = 2; // Valid format
-	bool registerNewUser = 3; // Not empty
+	string publicKey = 3; // Valid format
+	bool registeredUser = 4;
 }
 
 message AuthResponse {
