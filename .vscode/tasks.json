@@ -6,7 +6,7 @@
         {
             "label": "gen",
             "type": "shell",
-            "command": "npx protoc --ts_out frontend-gen/grpc_gen/ -I=. *.proto && protoc -I=. *.proto --go_out=backend-gen/grpc_gen --go_opt=paths=source_relative --go-grpc_out=backend-gen/grpc_gen --go-grpc_opt=paths=source_relative"
+            "command": "npm install @protobuf-ts/plugin && npx protoc --ts_out frontend-gen/grpc_gen/ -I=. *.proto && protoc -I=. *.proto --go_out=backend-gen/grpc_gen --go_opt=paths=source_relative --go-grpc_out=backend-gen/grpc_gen --go-grpc_opt=paths=source_relative"
         }
     ]
 }

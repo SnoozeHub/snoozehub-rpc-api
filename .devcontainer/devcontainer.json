@@ -3,7 +3,7 @@
 	"image": "namely/protoc-all",
 	"workspaceMount": "source=${localWorkspaceFolder},target=/defs,type=bind",
 	"workspaceFolder": "/defs",
-	"postCreateCommand": "mkdir frontend-gen frontend-gen/grpc_gen backend-gen backend-gen/grpc_gen",
+	"postCreateCommand": "mkdir -p frontend-gen/grpc_gen backend-gen/grpc_gen",
 	"overrideCommand": true,
 	"customizations": {
 		"vscode": {
