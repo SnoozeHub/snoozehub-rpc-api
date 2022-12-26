@@ -3,7 +3,7 @@
 	"image": "namely/protoc-all",
 	"workspaceMount": "source=${localWorkspaceFolder},target=/defs,type=bind",
 	"workspaceFolder": "/defs",
-	"postCreateCommand": "mkdir -p frontend-gen/grpc_gen backend-gen/grpc_gen",
+	"postCreateCommand": "mkdir -p frontend-gen/grpc_gen backend-gen/grpc_gen && npm install @protobuf-ts/plugin",
 	"overrideCommand": true,
 	"customizations": {
 		"vscode": {

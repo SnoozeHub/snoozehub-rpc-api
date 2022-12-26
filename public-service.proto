@@ -30,9 +30,9 @@ message AuthResponse {
 
 // BedList returned will include only beds which has at least 1 date available in the range [dateRangeLow, dateRangeHigh]
 message GetBedsRequest {
-	uint32 dateRangeLow = 1; // 8 digit (base 10) number, for example 30012000 -> 30-01-2000. It's valid
-	uint32 dateRangeHigh = 2; // 8 digit (base 10) number, for example 30012000 -> 30-01-2000. It's valid
-	string place = 3; // length=1-100
+	Date dateRangeLow = 1; // It's valid
+	Date dateRangeHigh = 2; // It's valid
+	string place = 3; // length=1-100. Maximum sensitive (aka it search the exact string)
 
 	Features featuresMondadory = 4;
 

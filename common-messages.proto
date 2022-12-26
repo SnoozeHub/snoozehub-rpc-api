@@ -27,7 +27,7 @@ message Features {
 
 message Booking {
     BedId bedId = 1;
-    uint32 date = 2; // Refers to the night between the date and the next day, 8 digit (base 10) number, for example 30012000 -> 30-01-2000.
+    Date date = 2; // Refers to the night between the date and the next day
 }
 
 message BedMutableInfo {
@@ -44,7 +44,7 @@ message BedList {
 	
 		optional BedMutableInfo bedMutableInfo = 2;
 
-		repeated uint32 dateAvailables = 3; //0-90 .  Refers to the night between the date and the next day, 8 digit (base 10) number, for example 30012000 -> 30-01-2000. It's valid
+		repeated Date dateAvailables = 3; //0-90 .  Refers to the night between the date and the next day. It's valid
 		
 		uint32 reviewCount = 4;
 		optional uint32 averageEvaluation = 5; // min = 0, max = 50. For example 42 is evaluated as 4.2. Not set if and only if reviewCount is 0
@@ -59,4 +59,10 @@ message BedId {
 message Review {
     uint32 evaluation = 1; // min = 0, max = 50. For example 42 is evaluated as 4.2
     optional string comment = 2; // length=1-200
+}
+
+message Date {
+    uint32 day = 1;
+    uint32 month = 2;
+    uint32 year = 3;
 }
