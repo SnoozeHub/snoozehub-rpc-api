@@ -31,7 +31,7 @@ message Booking {
 }
 
 message BedMutableInfo {
-    string place = 1; // length=1-100
+    string place = 1; // length=1-100. Maximum sensitive (aka it search the exact string)
     repeated bytes images = 2; // Valid 1-5 AVIF images, max size = 512kb
     optional string description = 5; // Not empty (trimmed)
     Features features = 3;

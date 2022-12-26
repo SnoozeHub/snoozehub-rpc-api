@@ -20,13 +20,12 @@ message GetNonceResponse {
 
 message AuthRequest {
 	string nonce = 1; // Valid format
-	string signedNonce = 2; // Valid format
-	bool registeredUser = 3;
+	string signedNonce = 2; // signing algorithm: secp256k1 . Valid format
 }
 
 message AuthResponse {
 	string authToken = 1; // Not empty
-	bool accountDoesNotExist = 2;
+	bool accountExist = 2;
 }
 
 // BedList returned will include only beds which has at least 1 date available in the range [dateRangeLow, dateRangeHigh]
