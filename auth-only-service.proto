@@ -27,7 +27,7 @@ service AuthOnlyService {
     rpc AddBed(BedMutableInfo) returns (Empty);
     rpc ModifyMyBed(ModifyBedRequest) returns (Empty);
     rpc RemoveMyBed(BedId) returns (Empty);
-    rpc GetMyBeds(Empty) returns (BedList); // Every bed returned doesn't have the field bedMutableInfo
+    rpc GetMyBeds(Empty) returns (BedList);
     rpc AddBookingAvaiability(Booking) returns (Empty);
     rpc RemoveBookAvaiability(Booking) returns (Empty);
 }

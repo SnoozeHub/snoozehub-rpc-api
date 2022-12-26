@@ -42,7 +42,7 @@ message BedList {
 	message Bed {
 		BedId id = 1;
 	
-		optional BedMutableInfo bedMutableInfo = 2;
+		BedMutableInfo bedMutableInfo = 2;
 
 		repeated Date dateAvailables = 3; //0-90 .  Refers to the night between the date and the next day. It's valid
 		
