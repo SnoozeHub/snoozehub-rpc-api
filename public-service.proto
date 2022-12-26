@@ -10,7 +10,7 @@ service PublicService {
 	rpc Auth (AuthRequest) returns (AuthResponse);
 
 
-	rpc GetBeds(GetBedsRequest) returns (BedList); // Every bed returned has the field bedMutableInfo mondadory
+	rpc GetBeds(GetBedsRequest) returns (BedList); // Every bed returned has the field bedMutableInfo mandatory
 	rpc GetReview(GetReviewsRequest) returns (GetReviewsResponse);
 }
 
@@ -34,7 +34,7 @@ message GetBedsRequest {
 	Date dateRangeHigh = 2; // It's valid
 	string place = 3; // length=1-100. Maximum sensitive (aka it search the exact string)
 
-	Features featuresMondadory = 4;
+	Features featuresMandatory = 4;
 
 	// Get first N results in order by proximity from fromIndex to fromIndex+N where N=15.
 	uint32 fromIndex = 5;
@@ -47,5 +47,5 @@ message GetReviewsRequest {
 }
 
 message GetReviewsResponse {
-	repeated Review reviews = 1; // 0-4 reviews. The field comment is mondadory
+	repeated Review reviews = 1; // 0-4 reviews. The field comment is mandatory
 }
