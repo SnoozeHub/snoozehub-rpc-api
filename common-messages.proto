@@ -14,15 +14,15 @@ message ProfilePic {
     optional bytes image = 1; // Valid AVIF image, max size = 512kb
 }
 
-message Features {
-    bool internetConnection = 1;
-    bool bathroom = 2;
-    bool heating = 3;
-    bool airConditioner = 4;
-    bool electricalOutlet = 5;
-    bool tap = 6;
-    bool bedLinens = 7;
-    bool pillows = 8;
+enum Feature {
+    internetConnection = 0;
+    bathroom = 1;
+    heating = 2;
+    airConditioner = 3;
+    electricalOutlet = 4;
+    tap = 5;
+    bedLinens = 6;
+    pillows = 7;
 }
 
 message Booking {
@@ -34,7 +34,7 @@ message BedMutableInfo {
     string place = 1; // length=1-100. Maximum sensitive (aka it search the exact string)
     repeated bytes images = 2; // Valid 1-5 AVIF images, max size = 512kb
     string description = 5;
-    Features features = 3;
+    repeated Feature features = 3;
     uint32 minimumDaysNotice = 4; //  min = 1, max = 30
 }
 
@@ -44,7 +44,7 @@ message BedList {
 	
 		BedMutableInfo bedMutableInfo = 2;
 
-		repeated Date dateAvailables = 3; //0-90 .  Refers to the night between the date and the next day. It's valid
+		repeated Date dateAvailables = 3; //0-90 .  Refers to the night between the date and the next day. It's valid. Every date is > today
 		
 		uint32 reviewCount = 4;
 		optional uint32 averageEvaluation = 5; // min = 0, max = 50. For example 42 is evaluated as 4.2. Not set if and only if reviewCount is 0

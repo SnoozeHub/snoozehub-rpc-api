@@ -30,11 +30,11 @@ message AuthResponse {
 
 // BedList returned will include only beds which has at least 1 date available in the range [dateRangeLow, dateRangeHigh]
 message GetBedsRequest {
-	Date dateRangeLow = 1; // It's valid
-	Date dateRangeHigh = 2; // It's valid
+	Date dateRangeLow = 1; // It's valid. > today (aka from tomorrow)
+	Date dateRangeHigh = 2; // It's valid. dateRangeHigh >= dateRangeLow
 	string place = 3; // length=1-100. Maximum sensitive (aka it search the exact string)
 
-	Features featuresMandatory = 4;
+	repeated Feature featuresMondatory = 4;
 
 	// Get first N results in order by proximity from fromIndex to fromIndex+N where N=15.
 	uint32 fromIndex = 5;
