@@ -34,7 +34,7 @@ message GetBedsRequest {
 	Date dateRangeHigh = 2; // It's valid. dateRangeHigh >= dateRangeLow
 	string place = 3; // length=1-100. Maximum sensitive (aka it search the exact string)
 
-	repeated Feature featuresMondatory = 4;
+	repeated Feature featuresMondatory = 4; // Distinct
 
 	// Get first N results in order by proximity from fromIndex to fromIndex+N where N=15.
 	uint32 fromIndex = 5;

@@ -34,7 +34,7 @@ message BedMutableInfo {
     string place = 1; // length=1-100. Maximum sensitive (aka it search the exact string)
     repeated bytes images = 2; // Valid 1-5 AVIF images, max size = 512kb
     string description = 5;
-    repeated Feature features = 3;
+    repeated Feature features = 3; // Distinct
     uint32 minimumDaysNotice = 4; //  min = 1, max = 30
 }
 
