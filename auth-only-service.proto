@@ -11,6 +11,7 @@ service AuthOnlyService {
     rpc GetAccountInfo(Empty) returns (AccountInfo);
     rpc GetProfilePic(Empty) returns (ProfilePic);
     rpc SetProfilePic(ProfilePic) returns (Empty);
+    // It also delete all his beds and booking availabilities, review to other's beds, and 
     rpc DeleteAccount(Empty) returns (Empty);
     // If the mail is changed, is needed to verify the account (and the eventual old verification code becomed invalid), you can call this function even if
     // the account is not verified, because for example the mail was wrong.
@@ -18,6 +19,7 @@ service AuthOnlyService {
 
     // FOR EVERY FOLLOWING RPC IS ASSUMED THAT THE CALLER HAS A VERIFIED ACCOUNT
     // GUEST RPCs
+    // "Human proof token" are then sent through mail to both guest, and host
     rpc Book(Booking) returns (BookResponse); // The book is available
     rpc GetMyBookings(Empty) returns (GetBookingsResponse);
     rpc Review(ReviewRequest) returns(Empty); // Is assumed that A user can review only a past booking that has no review from the user
@@ -32,10 +34,10 @@ service AuthOnlyService {
     rpc RemoveBookAvaiability(Booking) returns (Empty);
 }
 
-
 message VerifyMailRequest {
     string verificationCode = 1; // 6 digit numbers
 }
+
 message VerifyMailResponse {
     bool ok = 1;
 }

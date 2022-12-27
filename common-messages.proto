@@ -10,6 +10,7 @@ message AccountInfo {
     string mail = 3; // Is a valid mail format, max length=60
     string telegramUsername = 4; // Valid format, without '@'
 }
+
 message ProfilePic {
     optional bytes image = 1; // Valid AVIF image, max size = 512kb
 }
@@ -31,11 +32,12 @@ message Booking {
 }
 
 message BedMutableInfo {
-    string place = 1; // length=1-100. Maximum sensitive (aka it search the exact string)
-    repeated bytes images = 2; // Valid 1-5 AVIF images, max size = 512kb
-    string description = 5;
-    repeated Feature features = 3; // Distinct
-    uint32 minimumDaysNotice = 4; //  min = 1, max = 30
+    string address = 1; // length=1-100. Maximum sensitive (aka it search the exact string)
+    Coordinates coordinates = 2;
+    repeated bytes images = 3; // Valid 1-5 AVIF images, max size = 512kb
+    string description = 4; // length=0-200
+    repeated Feature features = 5; // Distinct
+    uint32 minimumDaysNotice = 6; //  min = 1, max = 30
 }
 
 message BedList {
@@ -58,11 +60,16 @@ message BedId {
 
 message Review {
     uint32 evaluation = 1; // min = 0, max = 50. For example 42 is evaluated as 4.2
-    optional string comment = 2; // length=1-200
+    string comment = 2; // length=0-200
 }
 
 message Date {
     uint32 day = 1;
     uint32 month = 2;
     uint32 year = 3;
+}
+
+message Coordinates {
+    double latitude = 1; // range: [-90, 90]
+    double longitude = 2; // range: [-180, 180]
 }
