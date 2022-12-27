@@ -34,7 +34,7 @@ message GetBedsRequest {
 	
 	Coordinates coordinates = 3; // 
 
-	repeated Feature featuresMondatory = 4; // All features are distinct
+	repeated Feature featuresMandatory = 4; // All features are distinct
 
 	// Get first N results in order by proximity (using the coordinates) from fromIndex to fromIndex+N where N=15.
 	uint32 fromIndex = 5;
