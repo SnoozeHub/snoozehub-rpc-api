@@ -20,6 +20,7 @@ service AuthOnlyService {
 
     // FOR EVERY FOLLOWING RPC IS ASSUMED THAT THE CALLER HAS A VERIFIED ACCOUNT
     // GUEST RPCs
+    // If guest can pay, he must do it within 1 minute
     // "Human proof token" are then sent through mail to both guest, and host
     rpc Book(Booking) returns (BookResponse); // The book is available
     rpc GetMyBookings(Empty) returns (GetBookingsResponse);
