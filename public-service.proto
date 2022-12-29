@@ -36,13 +36,13 @@ message GetBedsRequest {
 
 	repeated Feature featuresMandatory = 4; // All features are distinct
 
-	// Get first N results in order by proximity (using the coordinates) from fromIndex to fromIndex+N where N=15.
+	// Get first 0-N results in order by proximity (using the coordinates) from fromIndex to max fromIndex+N where N=15.
 	uint32 fromIndex = 5;
 }
 
 message GetReviewsRequest {
 	BedId bedId = 1;
-	// Get first N results (oder is not specified) from fromIndex to fromIndex+N where N=4.
+	// Get first 0-N results (oder is not specified) from fromIndex to max fromIndex+N where N=4.
 	uint32 fromIndex = 2;
 }
 
