@@ -6,9 +6,8 @@ message Empty { }
 
 message AccountInfo {
     string name = 1; // length=1-40
-    string surname = 2; // length=1-40
-    string mail = 3; // Is a valid mail format, max length=60
-    string telegramUsername = 4; // Valid format, without '@'
+    string mail = 2; // Is a valid mail format, max length=60
+    string telegramUsername = 3; // Valid format, without '@'
 }
 
 message ProfilePic {
