@@ -39,17 +39,18 @@ message BedMutableInfo {
     uint32 minimumDaysNotice = 6; //  min = 1, max = 30
 }
 
-message BedList {
-	message Bed {
-		BedId id = 1;
-	
-		BedMutableInfo bedMutableInfo = 2;
+message Bed {
+    BedId id = 1;
 
-		repeated Date dateAvailables = 3; //0-90 .  Refers to the night between the date and the next day. It's valid. Every date is > today
-		
-		uint32 reviewCount = 4;
-		optional uint32 averageEvaluation = 5; // min = 0, max = 50. For example 42 is evaluated as 4.2. Not set if and only if reviewCount is 0
-	}
+    BedMutableInfo bedMutableInfo = 2;
+
+    repeated Date dateAvailables = 3; //0-90 .  Refers to the night between the date and the next day. It's valid. Every date is > today
+    
+    uint32 reviewCount = 4;
+    optional uint32 averageEvaluation = 5; // min = 0, max = 50. For example 42 is evaluated as 4.2. Not set if and only if reviewCount is 0
+}
+
+message BedList {
 	repeated Bed beds = 1;
 }
 

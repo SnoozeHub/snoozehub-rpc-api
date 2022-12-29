@@ -50,7 +50,7 @@ message BookResponse {
 }
 
 message GetBookingsResponse {
-    repeated Booking book = 1;
+    repeated Booking book = 1; // #TODO ritorna i posti letto, e per ognuno una lista di date che si hanno prenotato
 }
 
 message ModifyBedRequest {

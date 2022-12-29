@@ -10,7 +10,8 @@ service PublicService {
 	rpc GetNonce (Empty) returns (GetNonceResponse);
 	rpc Auth (AuthRequest) returns (AuthResponse);
 
-	rpc GetBeds(GetBedsRequest) returns (BedList); // Every bed returned has the field bedMutableInfo mandatory
+	rpc GetBeds(GetBedsRequest) returns (BedList);
+	rpc GetBed(BedId) returns (GetBedResponse);
 	rpc GetReview(GetReviewsRequest) returns (GetReviewsResponse);
 }
 
@@ -50,4 +51,8 @@ message GetReviewsRequest {
 
 message GetReviewsResponse {
 	repeated Review reviews = 1; // 0-4 reviews. The field comment is mandatory
+}
+
+message GetBedResponse {
+	optional Bed bed = 1; // Not set only if the bed with the requested id doesn't exist
 }
