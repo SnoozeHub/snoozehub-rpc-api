@@ -6,6 +6,7 @@ import "common-messages.proto";
 
 service PublicService {
 	// Authentication
+	// Every nonce has an expiration time of 1 minute, so in this period you should call Auth
 	rpc GetNonce (Empty) returns (GetNonceResponse);
 	rpc Auth (AuthRequest) returns (AuthResponse);
 
@@ -23,6 +24,7 @@ message AuthRequest {
 }
 
 message AuthResponse {
+	// Every token has an expiration time of 24 hours
 	string authToken = 1; // Not empty
 	bool accountExist = 2;
 }
