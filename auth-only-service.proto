@@ -7,6 +7,9 @@ import "common-messages.proto";
 // Every account is identified only by the publicKey of the client, which is passed in metadata with the key "authToken"
 service AuthOnlyService {
     rpc SignUp(AccountInfo) returns (Empty); // Called only if the account does not exist (verified or not)
+
+    // FOR EVERY FOLLOWING RPC IS ASSUMED THAT THE CALLER ACCOUNT EXIST
+
     rpc VerifyMail(VerifyMailRequest) returns (VerifyMailResponse);
 
     rpc GetAccountInfo(Empty) returns (AccountInfo);
