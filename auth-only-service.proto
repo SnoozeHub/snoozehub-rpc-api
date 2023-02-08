@@ -10,7 +10,7 @@ service AuthOnlyService {
 
     // FOR EVERY FOLLOWING RPC IS ASSUMED THAT THE CALLER ACCOUNT EXIST
 
-    rpc VerifyMail(VerifyMailRequest) returns (VerifyMailResponse);
+    rpc VerifyMail(VerifyMailRequest) returns (VerifyMailResponse); // Returns ok=false also if the account is already verified
 
     rpc GetAccountInfo(Empty) returns (AccountInfo);
     rpc GetProfilePic(Empty) returns (ProfilePic);
