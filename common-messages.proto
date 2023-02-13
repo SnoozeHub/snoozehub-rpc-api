@@ -42,12 +42,16 @@ message BedMutableInfo {
 message Bed {
     BedId id = 1;
 
-    BedMutableInfo bedMutableInfo = 2;
-
-    repeated Date dateAvailables = 3; //0-90 .  Refers to the night between the date and the next day. It's valid. Every date is > today
+    string hostPublicKey = 2; // valid
     
-    uint32 reviewCount = 4;
-    optional uint32 averageEvaluation = 5; // min = 0, max = 50. For example 42 is evaluated as 4.2. Not set if and only if reviewCount is 0
+    string hostTelegramUsername = 3;
+
+    BedMutableInfo bedMutableInfo = 4;
+
+    repeated Date dateAvailables = 5; //0-90 .  Refers to the night between the date and the next day. It's valid. Every date is > today. Max date is today + 90 days
+    
+    uint32 reviewCount = 6;
+    optional uint32 averageEvaluation = 7; // min = 0, max = 50. For example 42 is evaluated as 4.2. Not set if and only if reviewCount is 0
 }
 
 message BedList {
