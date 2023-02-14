@@ -21,7 +21,7 @@ message GetNonceResponse {
 
 message AuthRequest {
 	string nonce = 1; // Valid format
-	string signedNonce = 2; // signing algorithm: secp256k1 . Valid format
+	bytes signedNonce = 2; // it follows personal_sign metamask standard . Valid format
 }
 
 message AuthResponse {
