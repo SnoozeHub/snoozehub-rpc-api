@@ -42,7 +42,7 @@ message BedMutableInfo {
 message Bed {
     BedId id = 1;
 
-    string hostPublicKey = 2; // valid
+    string hostPublicKey = 2; // valid, in hexadecimal, start with 0x
     
     string hostTelegramUsername = 3;
 
