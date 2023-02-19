@@ -29,7 +29,7 @@ service AuthOnlyService {
     rpc Book(Booking) returns (BookResponse); // The book is available and valid
     rpc Review(ReviewRequest) returns(Empty); // Is assumed that A user can review only a booked bed that has no review from that user
     // It returns the optional own review for the BedId
-    rpc GetMyReview(BedId) returns(GetMyReviewRequest);
+    rpc GetMyReview(BedId) returns(GetMyReviewResponse);
     rpc RemoveReview(BedId) returns(Empty); // The client has a review on that BedId
 
     // HOST RPCs
@@ -64,7 +64,7 @@ message ReviewRequest {
     Review review = 2;
 }
 
-message GetMyReviewRequest {
+message GetMyReviewResponse {
     optional Review review = 1;
 }
 
