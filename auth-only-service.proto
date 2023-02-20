@@ -15,7 +15,7 @@ service AuthOnlyService {
     rpc GetAccountInfo(Empty) returns (AccountInfo);
     rpc GetProfilePic(Empty) returns (ProfilePic);
     rpc SetProfilePic(ProfilePic) returns (Empty);
-    // It also delete all his beds and booking availabilities, review to other's beds, and 
+    // It also delete all his beds and booking availabilities, review to other's beds (adjusting averageEvaluation)
     rpc DeleteAccount(Empty) returns (Empty);
     // If the mail is changed, is needed to verify the account (and the eventual old verification code becomed invalid), you can call this function even if
     // the account is not verified, because for example the mail was wrong.
@@ -37,8 +37,8 @@ service AuthOnlyService {
     rpc ModifyMyBed(ModifyBedRequest) returns (Empty);
     rpc RemoveMyBed(BedId) returns (Empty);
     rpc GetMyBeds(Empty) returns (BedList);
-    rpc AddBookingAvailability(Booking) returns (Empty); // Is assumed that the booking isn't available
-    rpc RemoveBookAvailability(Booking) returns (Empty); // Is assumed that the booking is available
+    rpc AddBookingAvailability(Booking) returns (Empty); // Is assumed that the booking isn't available and the caller own the bed with the specified bedId
+    rpc RemoveBookAvailability(Booking) returns (Empty); // Is assumed that the booking is available and the caller own the bed with the specified bedId
 }
 
 message VerifyMailRequest {
