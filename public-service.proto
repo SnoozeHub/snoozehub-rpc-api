@@ -12,7 +12,7 @@ service PublicService {
 
 	rpc GetBeds(GetBedsRequest) returns (BedList);
 	rpc GetBed(BedId) returns (GetBedResponse);
-	rpc GetReview(GetReviewsRequest) returns (GetReviewsResponse);
+	rpc GetReviews(GetReviewsRequest) returns (GetReviewsResponse);
 }
 
 message GetNonceResponse {

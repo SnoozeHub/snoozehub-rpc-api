@@ -10,7 +10,8 @@ service AuthOnlyService {
 
     // FOR EVERY FOLLOWING RPC (TILL SERVICE LAST RPC) IS ASSUMED THAT THE CALLER ACCOUNT EXIST
 
-    rpc VerifyMail(VerifyMailRequest) returns (VerifyMailResponse); // Returns ok=false also if the account is already verified
+    // Returns ok=false also if the account is already verified
+    rpc VerifyMail(VerifyMailRequest) returns (VerifyMailResponse);
 
     rpc GetAccountInfo(Empty) returns (AccountInfo);
     rpc GetProfilePic(Empty) returns (ProfilePic);
@@ -22,6 +23,7 @@ service AuthOnlyService {
     rpc UpdateAccountInfo(AccountInfo) returns (Empty);
 
     // FOR EVERY FOLLOWING RPC (TILL SERVICE LAST RPC) IS ASSUMED THAT THE CALLER HAS A VERIFIED ACCOUNT
+    
     // GUEST RPCs
     // If guest can pay, he must do it within 1 minute
     // "Human proof token" are then sent through mail to both guest, and host
