@@ -31,8 +31,7 @@ message Booking {
 }
 
 message BookingInfo {
-    BedId bedId = 1;
-    DateInterval dateInterval = 2;
+    Booking booking = 1;
     string bookingCode = 3; // length= 6
     string hostPublicKey = 4; // in hexadecimal, start with 0x, valid (corresponding account exist)
     string guestPublicKey = 5; // in hexadecimal, start with 0x, valid (corresponding account exist)
