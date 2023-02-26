@@ -7,6 +7,7 @@ import "common-messages.proto";
 // Every account is identified only by the publicKey of the client. For this service the authtoken has to be always passed in metadata with the key "authtoken"
 service AuthOnlyService {
     rpc SignUp(AccountInfo) returns (Empty); // Called only if the account does not exist (verified or not)
+    rpc logout(Empty) returns (Empty);
 
     // FOR EVERY FOLLOWING RPC (TILL SERVICE LAST RPC) IS ASSUMED THAT THE CALLER ACCOUNT EXIST
 
