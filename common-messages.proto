@@ -28,16 +28,16 @@ enum Feature {
 message Booking {
     BedId bedId = 1;
     Date date = 2; // Refers to the night between the date and the next day
-    //!!! TODO !!!
-    // SHOULD BE:
-    // DateInterval dateInterval = 2;
-    // @lorenzotinfena
-    //
-
 }
 
 message BookingList {
     repeated Booking bookings = 1;
+}
+
+message BookingRange {
+    BedId bedId = 1;
+    Date startDate = 2; // Refers to the night between the date and the next day
+    Date endDate = 3; // Refers to the night between the date and the next day. >= startDate
 }
 
 message BedMutableInfo {

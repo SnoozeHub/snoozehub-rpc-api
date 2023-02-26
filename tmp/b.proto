@@ -1,0 +1,220 @@
+syntax = "proto3";
+
+option go_package = "./grpc_gen";
+
+
+
+// Every account is identified only by the publicKey of the client, which is passed in metadata with the key "authtoken"
+service AuthOnlyService {
+    rpc SignUp(AccountInfo) returns (Empty); // Called only if the account does not exist (verified or not)
+
+    // FOR EVERY FOLLOWING RPC (TILL SERVICE LAST RPC) IS ASSUMED THAT THE CALLER ACCOUNT EXIST
+
+    // Returns ok=false also if the account is already verified
+    rpc VerifyMail(VerifyMailRequest) returns (VerifyMailResponse);
+
+    rpc GetAccountInfo(Empty) returns (AccountInfo);
+    rpc GetProfilePic(Empty) returns (ProfilePic);
+    rpc SetProfilePic(ProfilePic) returns (Empty);
+    // It also delete all his beds and booking availabilities, review to other's beds (adjusting averageEvaluation)
+    rpc DeleteAccount(Empty) returns (Empty);
+    // If the mail is changed, is needed to verify the account (and the eventual old verification code becomed invalid), you can call this function even if
+    // the account is not verified, because for example the mail was wrong.
+    rpc UpdateAccountInfo(AccountInfo) returns (Empty);
+
+    // FOR EVERY FOLLOWING RPC (TILL SERVICE LAST RPC) IS ASSUMED THAT THE CALLER HAS A VERIFIED ACCOUNT
+    
+    // GUEST RPCs
+    // If guest can pay, he must do it within 1 minute
+    // "Human proof token" are then sent through mail to both guest, and host
+    // If the guest account will be deleted in the following minute or the booking becomes invalid, the will be no booking
+    rpc Book(Booking) returns (BookResponse); // The book is available and valid
+    rpc Review(ReviewRequest) returns(Empty); // Is assumed that A user can review only a booked bed that has no review from that user
+    // It returns the optional own review for the BedId
+    rpc GetMyReview(BedId) returns(GetMyReviewResponse);
+    rpc GetMyBookings(Empty) returns (BookingList); // NOT GOING TO BE IMPLEMENTED
+    rpc RemoveReview(BedId) returns(Empty); // The client has a review on that BedId
+
+    // HOST RPCs
+    rpc AddBed(BedMutableInfo) returns (Empty);
+    rpc ModifyMyBed(ModifyBedRequest) returns (Empty);
+    rpc RemoveMyBed(BedId) returns (Empty);
+    rpc GetMyBeds(Empty) returns (BedList);
+    //ACTUNG!! All the methods that take Booking should also updated with the new version of booking!
+    rpc AddBookingAvailability(BookingRange) returns (Empty); // Is assumed that the booking isn't available and the caller own the bed with the specified bedId
+    rpc ModifyBookingAvailability(Booking) returns (Empty); // NOT GOING TO BE IMPLEMENTED!!
+    rpc RemoveBookAvailability(Booking) returns (Empty); // Is assumed that the booking is available and the caller own the bed with the specified bedId
+    //rpc getBookingsByBookAvailability(Booking) returns (BookingList); // NOT GOING TO BE IMPLEMENTED
+}
+
+message VerifyMailRequest {
+    string verificationCode = 1; // 6 digit numbers
+}
+
+message VerifyMailResponse {
+    bool ok = 1;
+}
+
+message BookResponse {
+    // If true: client can pay, else the booking is locked
+    bool isBookingUnlocked = 1;
+}
+
+message ModifyBedRequest {
+    BedId bedId = 1;
+    BedMutableInfo bedMutableInfo = 2;
+}
+
+message ReviewRequest {
+    BedId bedId = 1;
+    Review review = 2;
+}
+
+message GetMyReviewResponse {
+    optional Review review = 1;
+}
+
+
+
+service PublicService {
+	// Authentication
+	// Every nonce has an expiration time of 1 minute, so in this period you should call Auth
+	rpc GetNonce (Empty) returns (GetNonceResponse);
+	rpc Auth (AuthRequest) returns (AuthResponse);
+
+	rpc GetBeds(GetBedsRequest) returns (BedList);
+	rpc GetBed(BedId) returns (GetBedResponse);
+	rpc GetReviews(GetReviewsRequest) returns (GetReviewsResponse);
+}
+
+message GetNonceResponse {
+	string nonce = 1; // Not empty
+}
+
+message AuthRequest {
+	string nonce = 1; // Valid format
+	bytes signedNonce = 2; // it follows personal_sign metamask standard . Valid format
+}
+
+message AuthResponse {
+	// Every token has an expiration time of 24 hours
+	string authToken = 1; // Not empty
+	bool accountExist = 2;
+}
+
+// BedList returned will include only beds which has at least 1 date available in the range [dateRangeLow, dateRangeHigh]
+message GetBedsRequest {
+	Date dateRangeLow = 1; // It's valid. > today (aka from tomorrow)
+	Date dateRangeHigh = 2; // It's valid. dateRangeHigh >= dateRangeLow
+	
+	Coordinates coordinates = 3; // 
+
+	repeated Feature featuresMandatory = 4; // All features are distinct
+
+	// Get first 0-N results in order by proximity (using the coordinates) from fromIndex to max fromIndex+N where N=15.
+	uint32 fromIndex = 5;
+}
+
+message GetReviewsRequest {
+	BedId bedId = 1;
+	// Get first 0-N results (oder is not specified) from fromIndex to max fromIndex+N where N=4.
+	uint32 fromIndex = 2;
+}
+
+message GetReviewsResponse {
+	repeated Review reviews = 1; // 0-4 reviews. The field comment is mandatory
+}
+
+message GetBedResponse {
+	optional Bed bed = 1; // Not set only if the bed with the requested id doesn't exist
+}
+message Empty { }
+
+message AccountInfo {
+    string name = 1; // length=1-40
+    string mail = 2; // Is a valid mail format, max length=60
+    string telegramUsername = 3; // Valid format, without '@'
+}
+
+message ProfilePic {
+    optional bytes image = 1; // Valid AVIF image, max size = 512kb
+}
+
+enum Feature {
+    internetConnection = 0;
+    bathroom = 1;
+    heating = 2;
+    airConditioner = 3;
+    electricalOutlet = 4;
+    tap = 5;
+    bedLinens = 6;
+    pillows = 7;
+}
+
+message Booking {
+    BedId bedId = 1;
+    Date date = 2; // Refers to the night between the date and the next day
+}
+
+message BookingList {
+    repeated Booking bookings = 1;
+}
+
+message BookingRange {
+    BedId bedId = 1;
+    Date startDate = 2; // Refers to the night between the date and the next day
+    Date endDate = 3; // Refers to the night between the date and the next day. >= startDate
+}
+
+message BedMutableInfo {
+    string address = 1; // length=1-100. Maximum sensitive (aka it search the exact string)
+    Coordinates coordinates = 2;
+    repeated bytes images = 3; // Valid 1-5 AVIF images, max size = 512kb
+    string description = 4; // length=0-200
+    repeated Feature features = 5; // Distinct
+    uint32 minimumDaysNotice = 6; //  min = 1, max = 30
+}
+
+message Bed {
+    BedId id = 1;
+
+    string hostPublicKey = 2; // in hexadecimal, start with 0x, valid (corresponding account exist)
+    
+    string hostTelegramUsername = 3;
+
+    BedMutableInfo bedMutableInfo = 4;
+
+    repeated Date dateAvailables = 5; //0-90 .  Refers to the night between the date and the next day. It's valid. Every date is > today. Max date is today + 90 days
+    
+    uint32 reviewCount = 6;
+    optional uint32 averageEvaluation = 7; // min = 0, max = 50. For example 42 is evaluated as 4.2. Not set if and only if reviewCount is 0
+}
+
+message BedList {
+	repeated Bed beds = 1;
+}
+
+message BedId {
+    string bedId = 1; // Not empty. Is valid (exist)
+}
+
+message Review {
+    uint32 evaluation = 1; // min = 0, max = 50. For example 42 is evaluated as 4.2
+    string comment = 2; // length=0-200
+}
+
+message Date {
+    uint32 day = 1;
+    uint32 month = 2;
+    uint32 year = 3;
+}
+
+message DateInterval{
+    Date startDate = 1;
+    Date endDate = 2;
+}
+
+message Coordinates {
+    double latitude = 1; // range: [-90, 90]
+    double longitude = 2; // range: [-180, 180]
+}

@@ -41,10 +41,10 @@ service AuthOnlyService {
     rpc RemoveMyBed(BedId) returns (Empty);
     rpc GetMyBeds(Empty) returns (BedList);
     //ACTUNG!! All the methods that take Booking should also updated with the new version of booking!
-    rpc AddBookingAvailability(Booking) returns (Empty); // Is assumed that the booking isn't available and the caller own the bed with the specified bedId
+    rpc AddBookingAvailability(BookingRange) returns (Empty); // Is assumed that the booking isn't available and the caller own the bed with the specified bedId
     rpc ModifyBookingAvailability(Booking) returns (Empty); // NOT GOING TO BE IMPLEMENTED!!
     rpc RemoveBookAvailability(Booking) returns (Empty); // Is assumed that the booking is available and the caller own the bed with the specified bedId
-    rpc getBookingsByBookAvailability(Booking) returns (BookingList); // NOT GOING TO BE IMPLEMENTED
+    //rpc getBookingsByBookAvailability(Booking) returns (BookingList); // NOT GOING TO BE IMPLEMENTED
 }
 
 message VerifyMailRequest {

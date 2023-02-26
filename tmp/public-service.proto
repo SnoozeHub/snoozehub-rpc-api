@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+option go_package = "./grpc_gen";
+
+import "common-messages.proto";
+
+service PublicService {
+	// Authentication
+	// Every nonce has an expiration time of 1 minute, so in this period you should call Auth
+	rpc GetNonce (Empty) returns (GetNonceResponse);
+	rpc Auth (AuthRequest) returns (AuthResponse);
+
+	rpc GetBeds(GetBedsRequest) returns (BedList);
+	rpc GetBed(BedId) returns (GetBedResponse);
+	rpc GetReviews(GetReviewsRequest) returns (GetReviewsResponse);
+}
+
+message GetNonceResponse {
+	string nonce = 1; // Not empty
+}
+
+message AuthRequest {
+	string nonce = 1; // Valid format
+	bytes signedNonce = 2; // it follows personal_sign metamask standard . Valid format
+}
+
+message AuthResponse {
+	// Every token has an expiration time of 24 hours
+	string authToken = 1; // Not empty
+	bool accountExist = 2;
+}
+
+// BedList returned will include only beds which has at least 1 date available in the range [dateRangeLow, dateRangeHigh]
+message GetBedsRequest {
+	Date dateRangeLow = 1; // It's valid. > today (aka from tomorrow)
+	Date dateRangeHigh = 2; // It's valid. dateRangeHigh >= dateRangeLow
+	
+	Coordinates coordinates = 3; // 
+
+	repeated Feature featuresMandatory = 4; // All features are distinct
+
+	// Get first 0-N results in order by proximity (using the coordinates) from fromIndex to max fromIndex+N where N=15.
+	uint32 fromIndex = 5;
+}
+
+message GetReviewsRequest {
+	BedId bedId = 1;
+	// Get first 0-N results (oder is not specified) from fromIndex to max fromIndex+N where N=4.
+	uint32 fromIndex = 2;
+}
+
+message GetReviewsResponse {
+	repeated Review reviews = 1; // 0-4 reviews. The field comment is mandatory
+}
+
+message GetBedResponse {
+	optional Bed bed = 1; // Not set only if the bed with the requested id doesn't exist
+}
