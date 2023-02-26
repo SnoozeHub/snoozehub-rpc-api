@@ -25,23 +25,19 @@ enum Feature {
     pillows = 7;
 }
 
-message Booking {
+message Booking { // The book is available and valid
     BedId bedId = 1;
     DateInterval dateInterval = 2;
 }
 
-message BookingInfo {
+message BookingInfo { // Is valid
     Booking booking = 1;
-    string bookingCode = 3; // length= 6
+    string bookingCode = 3; // length = 6
     string hostPublicKey = 4; // in hexadecimal, start with 0x, valid (corresponding account exist)
     string guestPublicKey = 5; // in hexadecimal, start with 0x, valid (corresponding account exist)
 }
 message BookingInfoList{
     repeated BookingInfo bookingInfos = 1;
-}
-
-message BookingList {
-    repeated Booking bookings = 1;
 }
 
 message BookingAvailability {
@@ -93,8 +89,8 @@ message Date {
 }
 
 message DateInterval{
-    Date startDate = 1;
-    Date endDate = 2;
+    Date startDate = 1; // Refers to the night between the date and the next day. >= startDate
+    Date endDate = 2; // Refers to the night between the date and the next day. >= startDate
 }
 
 message Coordinates {
