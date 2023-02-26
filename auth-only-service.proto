@@ -29,7 +29,7 @@ service AuthOnlyService {
     // If guest can pay, he must do it within 1 minute
     // "Human proof token" are then sent through mail to both guest, and host
     // If the guest account will be deleted in the following minute or the booking becomes invalid, the will be no booking
-    rpc Book(Booking) returns (BookResponse); // The book is available and valid
+    rpc Book(Booking) returns (BookResponse);
     rpc Review(ReviewRequest) returns(Empty); // Is assumed that A user can review only a booked bed that has no review from that user
     // It returns the optional own review for the BedId
     rpc GetMyReview(BedId) returns(GetMyReviewResponse);
