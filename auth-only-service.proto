@@ -32,6 +32,7 @@ service AuthOnlyService {
     rpc Review(ReviewRequest) returns(Empty); // Is assumed that A user can review only a booked bed that has no review from that user
     // It returns the optional own review for the BedId
     rpc GetMyReview(BedId) returns(GetMyReviewResponse);
+    rpc GetMyBookings(Empty) returns (BookingList); // NOT GOING TO BE IMPLEMENTED
     rpc RemoveReview(BedId) returns(Empty); // The client has a review on that BedId
 
     // HOST RPCs
@@ -39,8 +40,11 @@ service AuthOnlyService {
     rpc ModifyMyBed(ModifyBedRequest) returns (Empty);
     rpc RemoveMyBed(BedId) returns (Empty);
     rpc GetMyBeds(Empty) returns (BedList);
+    //ACTUNG!! All the methods that take Booking should also updated with the new version of booking!
     rpc AddBookingAvailability(Booking) returns (Empty); // Is assumed that the booking isn't available and the caller own the bed with the specified bedId
+    rpc ModifyBookingAvailability(Booking) returns (Empty); // NOT GOING TO BE IMPLEMENTED!!
     rpc RemoveBookAvailability(Booking) returns (Empty); // Is assumed that the booking is available and the caller own the bed with the specified bedId
+    rpc getBookingsByBookAvailability(Booking) returns (BookingList); // NOT GOING TO BE IMPLEMENTED
 }
 
 message VerifyMailRequest {
