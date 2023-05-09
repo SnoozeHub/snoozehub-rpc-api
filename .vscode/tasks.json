@@ -1,12 +1,12 @@
 {
-    // See https://go.microsoft.com/fwlink/?LinkId=733558
-    // for the documentation about the tasks.json format
-    "version": "2.0.0",
-    "tasks": [
-        {
-            "label": "gen",
-            "type": "shell",
-            "command": "npx protoc --ts_out frontend-gen/grpc_gen/ -I=. *.proto && protoc -I=. *.proto --go_out=backend-gen/grpc_gen --go_opt=paths=source_relative --go-grpc_out=backend-gen/grpc_gen --go-grpc_opt=paths=source_relative"
-        }
-    ]
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "gen",
+      "type": "shell",
+      "command": "npx protoc --ts_out frontend-gen/grpc_gen/ --ts_opt optimize_code_size  -I=. *.proto && protoc -I=. *.proto --go_out=backend-gen/grpc_gen --go_opt=paths=source_relative --go-grpc_out=backend-gen/grpc_gen --go-grpc_opt=paths=source_relative"
+    }
+  ]
 }
