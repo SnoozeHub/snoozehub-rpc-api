@@ -7,6 +7,11 @@
       "label": "gen",
       "type": "shell",
       "command": "npx protoc --ts_out frontend-gen/grpc_gen/ --ts_opt optimize_code_size  -I=. *.proto && protoc -I=. *.proto --go_out=backend-gen/grpc_gen --go_opt=paths=source_relative --go-grpc_out=backend-gen/grpc_gen --go-grpc_opt=paths=source_relative"
+    },
+    {
+      "label": "thisIsATest",
+      "type": "shell",
+      "command": "protoc -I .  --grpc-gateway_out ./gen  --grpc-gateway_opt logtostderr=true --grpc-gateway_opt paths=source_relative --experimental_allow_proto3_optional *.proto "
     }
   ]
 }
