@@ -2,17 +2,44 @@ syntax = "proto3";
 
 option go_package = "./grpc_gen";
 
+import "google/api/annotations.proto";
+
 import "common-messages.proto";
 
 service PublicService {
 	// Authentication
 	// Every nonce has an expiration time of 1 minute, so in this period you should call Auth
-	rpc GetNonce (Empty) returns (GetNonceResponse);
-	rpc Auth (AuthRequest) returns (AuthResponse);
+	rpc GetNonce (Empty) returns (GetNonceResponse) {
+		option (google.api.http) = {
+			post: "/PublicService/GetNonce"
+			body: "*"
+		};
+	}
+	rpc Auth (AuthRequest) returns (AuthResponse) {
+		option (google.api.http) = {
+			post: "/PublicService/Auth"
+			body: "*"
+		};
+	}
 
-	rpc GetBeds(GetBedsRequest) returns (BedList);
-	rpc GetBed(BedId) returns (GetBedResponse);
-	rpc GetReviews(GetReviewsRequest) returns (GetReviewsResponse);
+	rpc GetBeds(GetBedsRequest) returns (BedList) {
+		option (google.api.http) = {
+			post: "/PublicService/GetBeds"
+			body: "*"
+		};
+	}
+	rpc GetBed(BedId) returns (GetBedResponse) {
+		option (google.api.http) = {
+			post: "/PublicService/GetBed"
+			body: "*"
+		};
+	}
+	rpc GetReviews(GetReviewsRequest) returns (GetReviewsResponse) {
+		option (google.api.http) = {
+			post: "/PublicService/GetReviews"
+			body: "*"
+		};
+	}
 }
 
 message GetNonceResponse {
