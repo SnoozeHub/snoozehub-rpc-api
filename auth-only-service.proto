@@ -33,14 +33,12 @@ service AuthOnlyService {
 
     rpc GetAccountInfo(Empty) returns (AccountInfo) {
 		option (google.api.http) = {
-			post: "/AuthOnlyService/GetAccountInfo"
-			body: "*"
+			get: "/AuthOnlyService/GetAccountInfo"
 		};
 	}
     rpc GetProfilePic(Empty) returns (ProfilePic) {
 		option (google.api.http) = {
-			post: "/AuthOnlyService/GetProfilePic"
-			body: "*"
+			get: "/AuthOnlyService/GetProfilePic"
 		};
 	}
     rpc SetProfilePic(ProfilePic) returns (Empty) {
@@ -52,15 +50,14 @@ service AuthOnlyService {
     // It also delete all his beds and booking availabilities, review to other's beds (adjusting averageEvaluation)
     rpc DeleteAccount(Empty) returns (Empty) {
 		option (google.api.http) = {
-			post: "/AuthOnlyService/DeleteAccount"
-			body: "*"
+			delete: "/AuthOnlyService/DeleteAccount"
 		};
 	}
     // If the mail is changed, is needed to verify the account (and the eventual old verification code becomed invalid), you can call this function even if
     // the account is not verified, because for example the mail was wrong.
     rpc UpdateAccountInfo(AccountInfo) returns (Empty) {
 		option (google.api.http) = {
-			post: "/AuthOnlyService/UpdateAccountInfo"
+			put: "/AuthOnlyService/UpdateAccountInfo"
 			body: "*"
 		};
 	}
@@ -86,8 +83,7 @@ service AuthOnlyService {
     // It returns the optional own review for the BedId
     rpc GetMyReview(BedId) returns(GetMyReviewResponse) {
 		option (google.api.http) = {
-			post: "/AuthOnlyService/GetMyReview"
-			body: "*"
+			get: "/AuthOnlyService/GetMyReview"
 		};
 	}
     //rpc GetMyBookings(Empty) returns (BookingInfoList) {
@@ -98,7 +94,7 @@ service AuthOnlyService {
 	//} // NOT GOING TO BE IMPLEMENTED
     rpc RemoveReview(BedId) returns(Empty) {
 		option (google.api.http) = {
-			post: "/AuthOnlyService/RemoveReview"
+			delete: "/AuthOnlyService/RemoveReview"
 			body: "*"
 		};
 	} // The client has a review on that BedId
@@ -112,20 +108,19 @@ service AuthOnlyService {
 	}
     rpc ModifyMyBed(ModifyBedRequest) returns (Empty) {
 		option (google.api.http) = {
-			post: "/AuthOnlyService/ModifyMyBed"
+			put: "/AuthOnlyService/ModifyMyBed"
 			body: "*"
 		};
 	}
     rpc RemoveMyBed(BedId) returns (Empty) {
 		option (google.api.http) = {
-			post: "/AuthOnlyService/RemoveMyBed"
+			delete: "/AuthOnlyService/RemoveMyBed"
 			body: "*"
 		};
 	}
     rpc GetMyBeds(Empty) returns (BedList) {
 		option (google.api.http) = {
-			post: "/AuthOnlyService/GetMyBeds"
-			body: "*"
+			get: "/AuthOnlyService/GetMyBeds"
 		};
 	}
     rpc AddBookingAvailability(BookingAvailability) returns (Empty) {
@@ -142,8 +137,7 @@ service AuthOnlyService {
 	//}  // NOT GOING TO BE IMPLEMENTED!!
     rpc RemoveBookAvailability(BookingAvailability) returns (Empty) {
 		option (google.api.http) = {
-			post: "/AuthOnlyService/RemoveBookAvailability"
-			body: "*"
+			delete: "/AuthOnlyService/RemoveBookAvailability"
 		};
 	} // Is assumed that the booking is available and the caller own the bed with the specified bedId
     //rpc getBookingsByBookAvailability(BookingAvailability) returns (BookingInfoList) {

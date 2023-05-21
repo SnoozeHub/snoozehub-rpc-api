@@ -11,8 +11,7 @@ service PublicService {
 	// Every nonce has an expiration time of 1 minute, so in this period you should call Auth
 	rpc GetNonce (Empty) returns (GetNonceResponse) {
 		option (google.api.http) = {
-			post: "/PublicService/GetNonce"
-			body: "*"
+			get: "/PublicService/GetNonce"
 		};
 	}
 	rpc Auth (AuthRequest) returns (AuthResponse) {
@@ -24,20 +23,17 @@ service PublicService {
 
 	rpc GetBeds(GetBedsRequest) returns (BedList) {
 		option (google.api.http) = {
-			post: "/PublicService/GetBeds"
-			body: "*"
+			get: "/PublicService/GetBeds"
 		};
 	}
 	rpc GetBed(BedId) returns (GetBedResponse) {
 		option (google.api.http) = {
-			post: "/PublicService/GetBed"
-			body: "*"
+			get: "/PublicService/GetBed"
 		};
 	}
 	rpc GetReviews(GetReviewsRequest) returns (GetReviewsResponse) {
 		option (google.api.http) = {
-			post: "/PublicService/GetReviews"
-			body: "*"
+			get: "/PublicService/GetReviews"
 		};
 	}
 }
