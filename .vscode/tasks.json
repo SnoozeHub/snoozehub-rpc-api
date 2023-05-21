@@ -11,7 +11,7 @@
     {
       "label": "gen_docs",
       "type": "shell",
-      "command": "protoc --proto_path=. --openapiv2_out=./swagger-gen -openapiv2_y_opt=logtostderr=true *.proto"
+      "command": "protoc --proto_path=. --openapiv2_out=./swagger-gen --openapiv2_opt=logtostderr=true,allow_delete_body=true,allow_merge=true *.proto"
     },
     {
       "label": "thisIsATest",
