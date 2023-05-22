@@ -1,0 +1,1332 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "auth-only-service.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "AuthOnlyService"
+    },
+    {
+      "name": "PublicService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/AuthOnlyService/AddBed": {
+      "post": {
+        "summary": "HOST RPCs",
+        "operationId": "AuthOnlyService_AddBed",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BedMutableInfo"
+            }
+          }
+        ],
+        "tags": [
+          "AuthOnlyService"
+        ]
+      }
+    },
+    "/AuthOnlyService/AddBookingAvailability": {
+      "post": {
+        "operationId": "AuthOnlyService_AddBookingAvailability",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BookingAvailability"
+            }
+          }
+        ],
+        "tags": [
+          "AuthOnlyService"
+        ]
+      }
+    },
+    "/AuthOnlyService/Book": {
+      "post": {
+        "summary": "GUEST RPCs\nIf guest can pay, he must do it within 1 minute\n\"Human proof token\" are then sent through mail to both guest, and host\nIf the guest account will be deleted in the following minute or the booking becomes invalid, the will be no booking",
+        "operationId": "AuthOnlyService_Book",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/BookResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Booking"
+            }
+          }
+        ],
+        "tags": [
+          "AuthOnlyService"
+        ]
+      }
+    },
+    "/AuthOnlyService/DeleteAccount": {
+      "delete": {
+        "summary": "It also delete all his beds and booking availabilities, review to other's beds (adjusting averageEvaluation)",
+        "operationId": "AuthOnlyService_DeleteAccount",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "AuthOnlyService"
+        ]
+      }
+    },
+    "/AuthOnlyService/GetAccountInfo": {
+      "get": {
+        "operationId": "AuthOnlyService_GetAccountInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/AccountInfo"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "AuthOnlyService"
+        ]
+      }
+    },
+    "/AuthOnlyService/GetMyBeds": {
+      "get": {
+        "operationId": "AuthOnlyService_GetMyBeds",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/BedList"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "AuthOnlyService"
+        ]
+      }
+    },
+    "/AuthOnlyService/GetMyBookings": {
+      "post": {
+        "operationId": "AuthOnlyService_GetMyBookings",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/BookingInfoList"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        ],
+        "tags": [
+          "AuthOnlyService"
+        ]
+      }
+    },
+    "/AuthOnlyService/GetMyReview": {
+      "get": {
+        "summary": "It returns the optional own review for the BedId",
+        "operationId": "AuthOnlyService_GetMyReview",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetMyReviewResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "bedId",
+            "description": "Not empty. Is valid (exist)",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "AuthOnlyService"
+        ]
+      }
+    },
+    "/AuthOnlyService/GetProfilePic": {
+      "get": {
+        "operationId": "AuthOnlyService_GetProfilePic",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ProfilePic"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "AuthOnlyService"
+        ]
+      }
+    },
+    "/AuthOnlyService/ModifyBookingAvailability": {
+      "post": {
+        "operationId": "AuthOnlyService_ModifyBookingAvailability",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BookingAvailability"
+            }
+          }
+        ],
+        "tags": [
+          "AuthOnlyService"
+        ]
+      }
+    },
+    "/AuthOnlyService/ModifyMyBed": {
+      "put": {
+        "operationId": "AuthOnlyService_ModifyMyBed",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ModifyBedRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AuthOnlyService"
+        ]
+      }
+    },
+    "/AuthOnlyService/RemoveBookAvailability": {
+      "delete": {
+        "operationId": "AuthOnlyService_RemoveBookAvailability",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "bedId.bedId",
+            "description": "Not empty. Is valid (exist)",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "dateInterval.startDate.day",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "dateInterval.startDate.month",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "dateInterval.startDate.year",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "dateInterval.endDate.day",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "dateInterval.endDate.month",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "dateInterval.endDate.year",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "AuthOnlyService"
+        ]
+      }
+    },
+    "/AuthOnlyService/RemoveMyBed": {
+      "delete": {
+        "operationId": "AuthOnlyService_RemoveMyBed",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BedId"
+            }
+          }
+        ],
+        "tags": [
+          "AuthOnlyService"
+        ]
+      }
+    },
+    "/AuthOnlyService/RemoveReview": {
+      "delete": {
+        "operationId": "AuthOnlyService_RemoveReview",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BedId"
+            }
+          }
+        ],
+        "tags": [
+          "AuthOnlyService"
+        ]
+      }
+    },
+    "/AuthOnlyService/Review": {
+      "post": {
+        "operationId": "AuthOnlyService_Review",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ReviewRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AuthOnlyService"
+        ]
+      }
+    },
+    "/AuthOnlyService/SetProfilePic": {
+      "post": {
+        "operationId": "AuthOnlyService_SetProfilePic",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ProfilePic"
+            }
+          }
+        ],
+        "tags": [
+          "AuthOnlyService"
+        ]
+      }
+    },
+    "/AuthOnlyService/SignUp": {
+      "post": {
+        "operationId": "AuthOnlyService_SignUp",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AccountInfo"
+            }
+          }
+        ],
+        "tags": [
+          "AuthOnlyService"
+        ]
+      }
+    },
+    "/AuthOnlyService/UpdateAccountInfo": {
+      "put": {
+        "summary": "If the mail is changed, is needed to verify the account (and the eventual old verification code becomed invalid), you can call this function even if\nthe account is not verified, because for example the mail was wrong.",
+        "operationId": "AuthOnlyService_UpdateAccountInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AccountInfo"
+            }
+          }
+        ],
+        "tags": [
+          "AuthOnlyService"
+        ]
+      }
+    },
+    "/AuthOnlyService/VerifyMail": {
+      "post": {
+        "summary": "Returns ok=false also if the account is already verified",
+        "operationId": "AuthOnlyService_VerifyMail",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/VerifyMailResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/VerifyMailRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AuthOnlyService"
+        ]
+      }
+    },
+    "/AuthOnlyService/getBookingsByBookAvailability": {
+      "post": {
+        "operationId": "AuthOnlyService_getBookingsByBookAvailability",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/BookingInfoList"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BookingAvailability"
+            }
+          }
+        ],
+        "tags": [
+          "AuthOnlyService"
+        ]
+      }
+    },
+    "/AuthOnlyService/logout": {
+      "post": {
+        "operationId": "AuthOnlyService_logout",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        ],
+        "tags": [
+          "AuthOnlyService"
+        ]
+      }
+    },
+    "/PublicService/Auth": {
+      "post": {
+        "operationId": "PublicService_Auth",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/AuthResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AuthRequest"
+            }
+          }
+        ],
+        "tags": [
+          "PublicService"
+        ]
+      }
+    },
+    "/PublicService/GetBed": {
+      "get": {
+        "operationId": "PublicService_GetBed",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetBedResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "bedId",
+            "description": "Not empty. Is valid (exist)",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "PublicService"
+        ]
+      }
+    },
+    "/PublicService/GetBeds": {
+      "get": {
+        "operationId": "PublicService_GetBeds",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/BedList"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "dateRangeLow.day",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "dateRangeLow.month",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "dateRangeLow.year",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "dateRangeHigh.day",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "dateRangeHigh.month",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "dateRangeHigh.year",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "coordinates.latitude",
+            "description": "range: [-90, 90]",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "double"
+          },
+          {
+            "name": "coordinates.longitude",
+            "description": "range: [-180, 180]",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "double"
+          },
+          {
+            "name": "featuresMandatory",
+            "description": "All features are distinct",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "internetConnection",
+                "bathroom",
+                "heating",
+                "airConditioner",
+                "electricalOutlet",
+                "tap",
+                "bedLinens",
+                "pillows"
+              ]
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "fromIndex",
+            "description": "Get first 0-N results in order by proximity (using the coordinates) from fromIndex to max fromIndex+N where N=15.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "PublicService"
+        ]
+      }
+    },
+    "/PublicService/GetNonce": {
+      "get": {
+        "summary": "Authentication\nEvery nonce has an expiration time of 1 minute, so in this period you should call Auth",
+        "operationId": "PublicService_GetNonce",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetNonceResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "PublicService"
+        ]
+      }
+    },
+    "/PublicService/GetReviews": {
+      "get": {
+        "operationId": "PublicService_GetReviews",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetReviewsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "bedId.bedId",
+            "description": "Not empty. Is valid (exist)",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "fromIndex",
+            "description": "Get first 0-N results (oder is not specified) from fromIndex to max fromIndex+N where N=4.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "PublicService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "AccountInfo": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "length=1-40"
+        },
+        "mail": {
+          "type": "string",
+          "title": "Is a valid mail format, max length=60"
+        },
+        "telegramUsername": {
+          "type": "string",
+          "title": "Valid format, without '@'"
+        }
+      }
+    },
+    "AuthRequest": {
+      "type": "object",
+      "properties": {
+        "nonce": {
+          "type": "string",
+          "title": "Valid format"
+        },
+        "signedNonce": {
+          "type": "string",
+          "format": "byte",
+          "title": "it follows personal_sign metamask standard . Valid format"
+        }
+      }
+    },
+    "AuthResponse": {
+      "type": "object",
+      "properties": {
+        "authToken": {
+          "type": "string",
+          "description": "Not empty",
+          "title": "Every token has an expiration time of 24 hours"
+        },
+        "accountExist": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Bed": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/BedId"
+        },
+        "hostPublicKey": {
+          "type": "string",
+          "title": "in hexadecimal, start with 0x, valid (corresponding account exist)"
+        },
+        "hostTelegramUsername": {
+          "type": "string"
+        },
+        "bedMutableInfo": {
+          "$ref": "#/definitions/BedMutableInfo"
+        },
+        "dateAvailables": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/Date"
+          },
+          "title": "0-90 .  Refers to the night between the date and the next day. It's valid. Every date is \u003e today. Max date is today + 90 days"
+        },
+        "reviewCount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "averageEvaluation": {
+          "type": "integer",
+          "format": "int64",
+          "title": "min = 0, max = 50. For example 42 is evaluated as 4.2. Not set if and only if reviewCount is 0"
+        }
+      }
+    },
+    "BedId": {
+      "type": "object",
+      "properties": {
+        "bedId": {
+          "type": "string",
+          "title": "Not empty. Is valid (exist)"
+        }
+      }
+    },
+    "BedList": {
+      "type": "object",
+      "properties": {
+        "beds": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/Bed"
+          }
+        }
+      }
+    },
+    "BedMutableInfo": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string",
+          "title": "length=1-100. Maximum sensitive (aka it search the exact string)"
+        },
+        "coordinates": {
+          "$ref": "#/definitions/Coordinates"
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "byte"
+          },
+          "title": "Valid 1-5 AVIF images, max size = 512kb"
+        },
+        "description": {
+          "type": "string",
+          "title": "length=0-200"
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Feature"
+          },
+          "title": "Distinct"
+        },
+        "minimumDaysNotice": {
+          "type": "integer",
+          "format": "int64",
+          "title": "min = 1, max = 30"
+        }
+      }
+    },
+    "BookResponse": {
+      "type": "object",
+      "properties": {
+        "isBookingUnlocked": {
+          "type": "boolean",
+          "title": "If true: client can pay, else the booking is locked"
+        }
+      }
+    },
+    "Booking": {
+      "type": "object",
+      "properties": {
+        "bedId": {
+          "$ref": "#/definitions/BedId"
+        },
+        "dateInterval": {
+          "$ref": "#/definitions/DateInterval"
+        }
+      },
+      "title": "The book is available and valid"
+    },
+    "BookingAvailability": {
+      "type": "object",
+      "properties": {
+        "bedId": {
+          "$ref": "#/definitions/BedId"
+        },
+        "dateInterval": {
+          "$ref": "#/definitions/DateInterval"
+        }
+      }
+    },
+    "BookingInfo": {
+      "type": "object",
+      "properties": {
+        "booking": {
+          "$ref": "#/definitions/Booking"
+        },
+        "bookingCode": {
+          "type": "string",
+          "title": "length = 6"
+        },
+        "hostPublicKey": {
+          "type": "string",
+          "title": "in hexadecimal, start with 0x, valid (corresponding account exist)"
+        },
+        "guestPublicKey": {
+          "type": "string",
+          "title": "in hexadecimal, start with 0x, valid (corresponding account exist)"
+        }
+      },
+      "title": "Is valid"
+    },
+    "BookingInfoList": {
+      "type": "object",
+      "properties": {
+        "bookingInfos": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/BookingInfo"
+          }
+        }
+      }
+    },
+    "Coordinates": {
+      "type": "object",
+      "properties": {
+        "latitude": {
+          "type": "number",
+          "format": "double",
+          "title": "range: [-90, 90]"
+        },
+        "longitude": {
+          "type": "number",
+          "format": "double",
+          "title": "range: [-180, 180]"
+        }
+      }
+    },
+    "Date": {
+      "type": "object",
+      "properties": {
+        "day": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "month": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "year": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "DateInterval": {
+      "type": "object",
+      "properties": {
+        "startDate": {
+          "$ref": "#/definitions/Date",
+          "title": "Refers to the night between the date and the next day. \u003e= startDate"
+        },
+        "endDate": {
+          "$ref": "#/definitions/Date",
+          "title": "Refers to the night between the date and the next day. \u003e= startDate"
+        }
+      }
+    },
+    "Empty": {
+      "type": "object"
+    },
+    "Feature": {
+      "type": "string",
+      "enum": [
+        "internetConnection",
+        "bathroom",
+        "heating",
+        "airConditioner",
+        "electricalOutlet",
+        "tap",
+        "bedLinens",
+        "pillows"
+      ],
+      "default": "internetConnection"
+    },
+    "GetBedResponse": {
+      "type": "object",
+      "properties": {
+        "bed": {
+          "$ref": "#/definitions/Bed",
+          "title": "Not set only if the bed with the requested id doesn't exist"
+        }
+      }
+    },
+    "GetMyReviewResponse": {
+      "type": "object",
+      "properties": {
+        "review": {
+          "$ref": "#/definitions/Review"
+        }
+      }
+    },
+    "GetNonceResponse": {
+      "type": "object",
+      "properties": {
+        "nonce": {
+          "type": "string",
+          "title": "Not empty"
+        }
+      }
+    },
+    "GetReviewsResponse": {
+      "type": "object",
+      "properties": {
+        "reviews": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/Review"
+          },
+          "title": "0-4 reviews. The field comment is mandatory"
+        }
+      }
+    },
+    "ModifyBedRequest": {
+      "type": "object",
+      "properties": {
+        "bedId": {
+          "$ref": "#/definitions/BedId"
+        },
+        "bedMutableInfo": {
+          "$ref": "#/definitions/BedMutableInfo"
+        }
+      }
+    },
+    "ProfilePic": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "string",
+          "format": "byte",
+          "title": "Valid AVIF image, max size = 512kb"
+        }
+      }
+    },
+    "Review": {
+      "type": "object",
+      "properties": {
+        "evaluation": {
+          "type": "integer",
+          "format": "int64",
+          "title": "min = 0, max = 50. For example 42 is evaluated as 4.2"
+        },
+        "comment": {
+          "type": "string",
+          "title": "length=0-200"
+        }
+      }
+    },
+    "ReviewRequest": {
+      "type": "object",
+      "properties": {
+        "bedId": {
+          "$ref": "#/definitions/BedId"
+        },
+        "review": {
+          "$ref": "#/definitions/Review"
+        }
+      }
+    },
+    "VerifyMailRequest": {
+      "type": "object",
+      "properties": {
+        "verificationCode": {
+          "type": "string",
+          "title": "6 digit numbers"
+        }
+      }
+    },
+    "VerifyMailResponse": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "boolean"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}
