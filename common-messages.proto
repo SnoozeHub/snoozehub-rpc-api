@@ -30,15 +30,15 @@ message Booking { // The book is available and valid
     DateInterval dateInterval = 2;
 }
 
-//message BookingInfo { // Is valid
-//    Booking booking = 1;
-//    string bookingCode = 3; // length = 6
-//    string hostPublicKey = 4; // in hexadecimal, start with 0x, valid (corresponding account exist)
-//    string guestPublicKey = 5; // in hexadecimal, start with 0x, valid (corresponding account exist)
-//}
-//message BookingInfoList{
-//    repeated BookingInfo bookingInfos = 1;
-//}
+message BookingInfo { // Is valid
+   Booking booking = 1;
+   string bookingCode = 3; // length = 6
+   string hostPublicKey = 4; // in hexadecimal, start with 0x, valid (corresponding account exist)
+   string guestPublicKey = 5; // in hexadecimal, start with 0x, valid (corresponding account exist)
+}
+message BookingInfoList{
+   repeated BookingInfo bookingInfos = 1;
+}
 
 message BookingAvailability {
     BedId bedId = 1;

@@ -31,6 +31,7 @@ service PublicService {
 			get: "/PublicService/GetBed"
 		};
 	}
+     // NOTE: NOT IMPLEMENTED!!
 	rpc GetReviews(GetReviewsRequest) returns (GetReviewsResponse) {
 		option (google.api.http) = {
 			get: "/PublicService/GetReviews"
