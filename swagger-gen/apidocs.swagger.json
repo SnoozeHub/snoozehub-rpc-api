@@ -86,7 +86,7 @@
     },
     "/AuthOnlyService/Book": {
       "post": {
-        "summary": "GUEST RPCs\nIf guest can pay, he must do it within 1 minute\n\"Human proof token\" are then sent through mail to both guest, and host\nIf the guest account will be deleted in the following minute or the booking becomes invalid, the will be no booking",
+        "summary": "NOTE: NOT IMPLEMENTED!!\nGUEST RPCs\nIf guest can pay, he must do it within 1 minute\n\"Human proof token\" are then sent through mail to both guest, and host\nIf the guest account will be deleted in the following minute or the booking becomes invalid, the will be no booking",
         "operationId": "AuthOnlyService_Book",
         "responses": {
           "200": {
@@ -186,6 +186,7 @@
     },
     "/AuthOnlyService/GetMyBookings": {
       "post": {
+        "summary": "NOTE: NOT IMPLEMENTED!!",
         "operationId": "AuthOnlyService_GetMyBookings",
         "responses": {
           "200": {
@@ -218,7 +219,7 @@
     },
     "/AuthOnlyService/GetMyReview": {
       "get": {
-        "summary": "It returns the optional own review for the BedId",
+        "summary": "NOTE: NOT IMPLEMENTED!!\nIs assumed that A user can review only a booked bed that has no review from that user\nIt returns the optional own review for the",
         "operationId": "AuthOnlyService_GetMyReview",
         "responses": {
           "200": {
@@ -272,6 +273,7 @@
     },
     "/AuthOnlyService/ModifyBookingAvailability": {
       "post": {
+        "summary": "NOTE: NOT IMPLEMENTED!!\nIs assumed that the booking isn't available and the caller own the bed with the specified bedId",
         "operationId": "AuthOnlyService_ModifyBookingAvailability",
         "responses": {
           "200": {
@@ -304,6 +306,7 @@
     },
     "/AuthOnlyService/ModifyMyBed": {
       "put": {
+        "summary": "NOTE: NOT IMPLEMENTED!!",
         "operationId": "AuthOnlyService_ModifyMyBed",
         "responses": {
           "200": {
@@ -441,6 +444,7 @@
     },
     "/AuthOnlyService/RemoveReview": {
       "delete": {
+        "summary": "NOTE: NOT IMPLEMENTED!!",
         "operationId": "AuthOnlyService_RemoveReview",
         "responses": {
           "200": {
@@ -473,6 +477,7 @@
     },
     "/AuthOnlyService/Review": {
       "post": {
+        "summary": "NOTE: NOT IMPLEMENTED!!",
         "operationId": "AuthOnlyService_Review",
         "responses": {
           "200": {
@@ -569,7 +574,7 @@
     },
     "/AuthOnlyService/UpdateAccountInfo": {
       "put": {
-        "summary": "If the mail is changed, is needed to verify the account (and the eventual old verification code becomed invalid), you can call this function even if\nthe account is not verified, because for example the mail was wrong.",
+        "summary": "NOTE: NOT IMPLEMENTED!!\nIf the mail is changed, is needed to verify the account (and the eventual old verification code becomed invalid), you can call this function even if\nthe account is not verified, because for example the mail was wrong.",
         "operationId": "AuthOnlyService_UpdateAccountInfo",
         "responses": {
           "200": {
@@ -635,6 +640,7 @@
     },
     "/AuthOnlyService/getBookingsByBookAvailability": {
       "post": {
+        "summary": "NOTE: NOT IMPLEMENTED!!\nIs assumed that the booking is available and the caller own the bed with the specified bedId",
         "operationId": "AuthOnlyService_getBookingsByBookAvailability",
         "responses": {
           "200": {
@@ -896,6 +902,7 @@
     },
     "/PublicService/GetReviews": {
       "get": {
+        "summary": "NOTE: NOT IMPLEMENTED!!",
         "operationId": "PublicService_GetReviews",
         "responses": {
           "200": {
